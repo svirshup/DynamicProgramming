@@ -1,51 +1,24 @@
 # DynamicProgramming
 
-Analytical Decision Making 
-Final Report
-Team dunnhumby
+## Analytical Decision Making 
+## Final Report
+### Team dunnhumby
 
 
-
-
-
-
-
-
-
-
-
-Table of Contents
-
-Introduction to the Business Problem	3
-Defining the Problem	3
-Objective Function	3
-Decision Variables	4
-Constraints	4
-Demand Function	4
-Explore the Data	5
-Data Improvements	5
-Dynamic Optimization	6
-Defining the Problem Parameters	6
-Interpretation of the Output	7
-Limitations of this Model	7
-References	8
-Appendix	9
-
-
-Introduction to the Business Problem
+## Introduction to the Business Problem
 As part of the UC Davis MSBA program, our team has been partnered up with dunnhumby, a UK-based customer science company leveraging data to optimize customer loyalty and pricing strategies for global retailers. This partnership is grounded on the execution of a 10-month analytics-based practicum project, aimed at tackling an industry knowledge gap and improving the consumer price perception of one their key clients, Raley’s Supermarkets.
 Raley’s Supermarkets is a family-owned grocery chain that currently operates 128 stores in Northern California and Nevada. According to our key stakeholders at dunnhumby, Raley’s has traditionally scored very high with their customers on specific elements of their shopping experience - service, product quality, etc., yet they have also scored very low on price perception. 
 While our practicum team has been hard at work identifying the link between consumer price perception, competitor prices, and price elasticities, we have also identified another problem that dunnhumby and Raley's face: determining an optimal price to charge. There are many factors that come into play when setting prices at a grocery store. We hypothesis that if Raley's can identify a way to regularly update prices based on a long-term strategy to maximize revenue, then they will be able to improve their business’s price perception. 
 In this jupyter notebook, we explore how to use a relatively simple dynamic programming model to determine what prices should be set for a certain product (we’ve chosen the product “Orange Milanos” as an example) given only a demand function and some initial conditions.
 This notebook walks through the logic behind defining the correct objective function, decision variables, and constraints. It explores the data behind the model, creates our own demand function, and then plugs it all into a SciPy minimization solver to determine the optimal prices that will achieve the best revenue.
 
-Defining the Problem
-Objective Function
+## Defining the Problem
+### Objective Function
 Raley's has control over their price, but how do prices influence their unit sales? How can Raley's maximize the revenue by choosing different price levels of their product?
 
-Decision Variables
+### Decision Variables
 For each time period, t, there is a price, P. t is an index between 1 and 52 for each week of the year. S(P,t) represents unit sales as a function of price and week. Similarly, R(P,S,t) represents revenue as a function of price and week.
-Constraints
+### Constraints
 We have to make some assumptions about our constraints to simplify our model. They are:
 Due to restocking limitations, no single week can sell more than 200 boxes of orange milanos
 
@@ -54,7 +27,7 @@ Due to a marketing contract with Pepperidge Farms, Raley's has promised to purch
 Raley's contract with Pepperidge Farms also limits the total unit sales for the entire year to be 7,500 boxes due to their manufacturing and supply chain limitations.
 
 Non-negativity
-Price and Demand cannot be negative:
+* Price and Demand cannot be negative:
 
 Demand Function
 Having a demand function is an important component of this dynamic optimization problem. This is necessary in order to map the demand at any given price. This is critical to know because, from the available data in the Raley's POS system, we only have one price point at any given time. Creating a demand function allows us to anticipate how that demand would have changed if we had a slightly different price. An example of such a demand function is below (we do not end up using this function in our model, it is just illustrative):
